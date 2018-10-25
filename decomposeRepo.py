@@ -1,8 +1,9 @@
 from GitReplay import GitReplay
 from SetupManager import ExperimentHelper
+import os
 
 MAX_ROLLOUT = 5
-EXAMPLE_DIR = "/Users/ghlgh/Desktop/Courework.nosync/CS 599DM/gluo-joda-time"
+EXAMPLE_DIR = os.path.join(os.environ.get('REPO_BASE'),"gluo-joda-time")
 
 if __name__ == "__main__":
     git_repo = GitReplay(EXAMPLE_DIR)
