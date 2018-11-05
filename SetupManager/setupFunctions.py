@@ -4,6 +4,7 @@ import yaml
 import os
 
 EKSTAZI_XML_PATH = "{}/ekstazi.xml".format(os.path.dirname(os.path.realpath(__file__)))
+AZURE_FUNCTION_ENTRY = "https://cireinteract.azurewebsites.net/api/CINotificationEndPoint?code=AEW9Jm5ijk8SNN2PA0hIPwAxIcb3lqjqWL97EadKyB6qWSkNqNC0bQ=="
 
 def travis_setup(repo_dir, tag, suffixes, keyWordReplacement):
     def restore_by_suffix(tag, suffix):
@@ -24,6 +25,7 @@ def travis_setup(repo_dir, tag, suffixes, keyWordReplacement):
             travis_setting["cache"]["directories"] += new_directories
     else:
         travis_setting["cache"]["directories"] = new_directories
+        
     # set before_script (restore artifacts) and before_cache (store artifacts)
     if "before_script" not in travis_setting:
         travis_setting["before_script"] = []
@@ -45,6 +47,18 @@ def travis_setup(repo_dir, tag, suffixes, keyWordReplacement):
         for idx in range(len(travis_setting["script"])):
             if "mvn" in travis_setting["script"][idx][:3] and keyword in travis_setting["script"][idx]:
                 travis_setting["script"][idx] = travis_setting["script"][idx].replace(keyword, keyWordReplacement[keyword])
+
+    # Add notification [TODO make this configurable]
+    if "notifications" not in travis_setting:
+        travis_setting["notifications"] = {}
+    if "webhooks" not in travis_setting["notifications"]:
+        travis_setting["notifications"]["webhooks"] = {}
+    travis_setting["notifications"]["webhooks"]["urls"] = [AZURE_FUNCTION_ENTRY]
+    travis_setting["notifications"]["webhooks"]["on_success"] = "always"
+    travis_setting["notifications"]["webhooks"]["on_failure"] = "always"
+    travis_setting["notifications"]["webhooks"]["on_start"] = "never"
+    travis_setting["notifications"]["webhooks"]["on_cancel"] = "never"
+    travis_setting["notifications"]["webhooks"]["on_error"] = "always"
 
     write_file = open(os.path.join(repo_dir, ".travis.yml"), 'w')
     yaml.dump(travis_setting, write_file, default_flow_style=False, width=float("inf"))
