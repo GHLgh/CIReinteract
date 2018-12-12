@@ -6,7 +6,7 @@ class ExperimentHelper:
         pass
 
     @staticmethod
-    def get_setup_function(tag, ci_tool):
+    def get_setup_function(tag, ci_tool, override_run_command = False):
         return {
-            "ekstazi": partial(ekstazi_setup, ci_tool)
+            "ekstazi": partial(ekstazi_setup, ci_tool, override_run_command)
         }.get(tag.lower(), None)
