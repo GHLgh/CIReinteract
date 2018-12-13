@@ -43,7 +43,7 @@ If the above setting satisfies your need, you can directly use the tool as the f
 
 ### Set Up Responsive Server
 
-(A responsive server is just a simple server that is able to receive specific requests and behave accordingly. I called it responsive server just because it sounds good.)
+(A responsive server is just a simple server that is able to receive specific requests and behave accordingly. I call it responsive server just because it sounds good.)
 
 Set up your Azure function with the two endpoints included in `azure_function_code`, note that `Environment.GetEnvironmentVariable("STORAGE_CONNECTION")` used in both endpoints are environment variable related to your cloud storage, thus you also need to set up your Azure blob storage and add the connection string to the environment variables of your Azure function.
 
@@ -109,6 +109,7 @@ As a summary, if you want to provide support on:
 
 * Different RTS tool:
   * Provide your own `rts_setup_function` as in `src/SetupManger/setupFunctions.py`, which will takes a string of path to repository as argument and return a list of files that are modified. Such that once the function is called, the project will be able to run with the provided RTS tool.
+  * Update `src/SetupManager/constants.py` and `get_setup_function` in `src/SetupManager/__init__.py` to reflect your changes.
 * Different CI environment
   * Provide your own `ci_setup_function` as in `src/SetupManger/setupFunctions.py`, which will takes a string of path to repository as argument and return a list of files that are modified.
   Such that once the function is called, the RTS tool will work properly in designated CI environment.
