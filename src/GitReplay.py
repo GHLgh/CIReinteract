@@ -26,7 +26,7 @@ class GitReplay:
     # where the content of seed_0 is identical to commit_0 and seed_1 is identical to commit_1
     # @param num_rollout: the maximum number of commits to be rolled out [TODO] check return value
     # @param push: boolean to indicate if the created branches will be pushed to remote
-    # return True if the creation is success, False otherwise.
+    # @return True if the creation is success, False otherwise.
     def build_seeds_from_recent_commits(self, num_rollout, push=True):
         if self.repo_dir_ is None:
             print("Not a Git directory")
@@ -45,7 +45,7 @@ class GitReplay:
     #   that the original branches in the repository doesn't contain "seed"
     #   and other string used as tag in their names
     # @param tag: the string used to filter the branches to be deleted
-    # return True if the deletion is success, False otherwise.
+    # @return True if the deletion is success, False otherwise.
     def delete_all_branches_with_tag(self, tag="seed"):
         if self.repo_dir_ is None:
             print("Not a Git directory")
@@ -60,7 +60,7 @@ class GitReplay:
     # Obtain a list of seed index in the repository
     # NOTE: Given that it only check substring "seed_{idx}" in name, please make sure
     #   that the original branches in the repository don't have name in this format
-    # return a list of the seed index in integer
+    # @return a list of the seed index in integer
     def get_existing_seed(self):
         if self.repo_dir_ is None:
             print("Not a Git directory")
@@ -74,7 +74,7 @@ class GitReplay:
     # NOTE: Given that it only check substring "{tag}_seed_{idx}" in name, please make sure
     #   that the original branches in the repository don't have name in this format
     # @param tag: the string used to filter the branches to be selected
-    # return a list of the seed index in integer
+    # @return a list of the seed index in integer
     def get_experiment_seed_with_tag(self, tag):
         if self.repo_dir_ is None:
             print("Not a Git directory")
@@ -88,7 +88,7 @@ class GitReplay:
     # NOTE: Given that it only check substring "{tag}_{idx}-{idx-1}" in name, please make sure
     #   that the original branches in the repository don't have name in this format
     # @param tag: the string used to filter the branches to be selected
-    # return a list of the index in integer
+    # @return a list of the index in integer
     def get_experiment_branches_with_tag(self, tag):
         if self.repo_dir_ is None:
             print("Not a Git directory")
@@ -110,7 +110,7 @@ class GitReplay:
     # @param experiment_setup_function: the function to be called to set up the experiment branches,
     #    for instance, setting up the RTS tool as Maven plugin and modifying the Travis configuration
     # @param push: boolean to indicate if the created branches will be pushed to remote
-    # return True if the creation is success, False otherwise.
+    # @return True if the creation is success, False otherwise.
     def create_experiment_branches_with_tag(self, tag, seed_index_list, experiment_setup_function=None, push=True):
         if self.repo_dir_ is None:
             print("Not a Git directory")
@@ -163,6 +163,7 @@ class GitReplay:
     # @param skip_ci: boolean to specify if this commit will trigger CI,
     #    note that it only works for Travis CI for now because the skip string is hard-coded
     #    to what Travis CI can recognize
+    # @return True if the operation is success, False otherwise.
     def proceed_commit_history(self, tag, push=True, skip_ci=False):
         if self.repo_dir_ is None:
             print("Not a Git directory")
@@ -181,6 +182,7 @@ class GitReplay:
         if push:
             call(['git', 'push', '--all'], cwd=self.repo_dir_)
             print("Done pushing experiment branches")
+        return True
 
     # It creates new empty commits on the experiment seeds such that
     # the experiment seeds will be different from any existing branches for sure.
