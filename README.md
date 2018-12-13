@@ -2,7 +2,7 @@
 
 This is the repository for the CS598DM project, which provides researchers a tool to perform experiments on Regression Test Selection in a Continuous Integration environment.
 
-Note tht the tool name doesn't reflect the intention of the tool, so please read the [motivation](#Motivation) carefully to see if the tool actually fits your need.
+Note that the tool name doesn't reflect the intention of the tool, so please read the [motivation](#Motivation) carefully to see if the tool actually fits your need.
 
 ## Scope of the Project
 
